@@ -1,0 +1,99 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <!--<title>admin home page</title>-->
+
+    </h:head>
+    <h:body>
+        <ui:composition template="../../templates/template.xhtml">
+            <ui:define name="title">Fonctions</ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <p:commandButton oncomplete="PF('groupenewDialog').show()" value="Ajouter" icon="ui-icon-plus">
+                       
+                    </p:commandButton>
+                </h:form>
+                <p:dialog appendTo="@(body)" height="600px" width="600px" header="Nouveau groupe" widgetVar="groupenewDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <h:form id="formEn">
+                        <p:growl id="messageEn" life="2000"/>
+                        <div class="row">
+                            <div class="col-lg-4 col-xm-4 clo-xs-4">
+                                Libelle de la fonction:
+                            </div>
+                            <div class="col-lg-8 col-xs-8 col-md-8">
+                                <p:inputText placeholder="Libelle du groupe" value="#{FonctionCoontroller.fonction.libellefonction}"></p:inputText>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-4 col-xm-4 clo-xs-4">
+                                <p:commandButton type="submit" action="#{FonctionCoontroller.enregistrerFonction()}" update="messageEn,:form_list,formEn" styleClass="ui-priority-primary" oncomplete="PF('groupenewDialog').hide()" value="Enregistrer"></p:commandButton>
+                            </div>
+                            <div class="col-lg-8 col-xs-8 col-md-8">
+                                <p:commandButton type="reset" value="Annuler"></p:commandButton>
+                            </div>
+                        </div>
+                    </h:form>
+                </p:dialog>
+                
+                
+                
+                <h:form id="form_list">
+                    
+                    
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <p:dataTable id="groupList" var="fonction" selection="#{FonctionCoontroller.selectedFonction}" value="#{FonctionCoontroller.fonctionList}" editable="true" resizableColumns="true" resizeMode="fit"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                      rowsPerPageTemplate="5,10,15"
+                                      rows="10"
+                                      paginator="true"
+                                 >
+                        <f:facet name="header">
+                            Liste des differentes fonctions
+                        </f:facet>
+                        <p:ajax event="rowEdit" listener="#{FonctionCoontroller.editFonction}" update=":form_list:msgs,:form_list:groupList" />
+                        <p:ajax event="rowEditCancel" listener="#{FonctionCoontroller.cancelEdit}" update=":form_list:msgs,:form_list:groupList" />
+                        
+                        <p:column headerText="Libelle" filterBy="#{fonction.libellefonction}">
+                            
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{fonction.libellefonction}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{fonction.libellefonction}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                            
+                        </p:column>
+                        
+                       <p:column style="width:35px">
+                            <p:rowEditor />
+                        </p:column>
+                        <p:column style="width:32px;text-align: center">
+                            <p:commandButton title="Supprimer" icon="ui-icon-trash" action="#{FonctionCoontroller.supprimerFonction()}"  update=":form_list:msgs,:form_list:groupList" >
+                                <f:setPropertyActionListener value="#{fonction}" target="#{FonctionCoontroller.selectedFonction}" />
+                                <p:confirm header="Confirmation" message="Voulez vous supprimer #{fonction.libellefonction}?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                            
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Oui"  type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-closethick" />
+                        </p:confirmDialog> 
+                            
+                        </p:column>
+                        <p:column style="width:32px;text-align: center">
+                             <p:commandButton icon="ui-icon-search" title="Details">
+                                 <f:setPropertyActionListener value="#{fonction}" target="#{FonctionCoontroller.selectedFonction}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

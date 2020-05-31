@@ -1,0 +1,58 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"  
+                xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://primefaces.org/ui" 
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+
+    <p:panelMenu>
+        <c:if test="#{utilisateurBean.user().idprofil.libelleprofil=='secretaire'}">
+            <p:submenu label="Paramètres">
+                <p:menuitem value="groupe" url="/LSD/Pages/Secreta/GroupePage.xhtml"/>
+
+                <p:menuitem value="Localite" url="/LSD/Pages/Secreta/LocalitePage.xhtml"/>
+
+                <p:menuitem value="fonctions des patients" url="/LSD/Pages/Secreta/FonctionPage.xhtml"/>
+                <p:menuitem value="unite de dialyse" url="/LSD/Pages/Secreta/UniteDialysePage.xhtml"/>
+                <p:menuitem value="séance" url="/LSD/Pages/Secreta/SeancePage.xhtml"/>
+                <p:menuitem value="poste" url="/LSD/Pages/Secreta/PostePage.xhtml"/>
+            </p:submenu>
+            <p:submenu label="Gestion des patients">
+                <p:menuitem value="patient" url="/LSD/Pages/Secreta/PatientPage.xhtml"/>
+                <p:menuitem value="Patients sortis"  url="/LSD/Pages/Secreta/PatientsSorties.xhtml"/>
+                <p:menuitem value="Imprimer la liste des patients" url="/LSD/Pages/Secreta/PatientImprimer.xhtml"/>
+
+
+            </p:submenu>
+        </c:if>
+        <c:if test="#{utilisateurBean.user().idprofil.libelleprofil!='administrateur'}">
+
+
+            <p:submenu label="Branchement">
+
+                <c:if test="#{utilisateurBean.user().idprofil.libelleprofil=='secretaire'}">
+                    <p:menuitem value="Branchement auto" url="/LSD/Pages/Secreta/BranchementPage.xhtml"/>
+                </c:if>
+
+                <c:if test="#{utilisateurBean.user().idprofil.libelleprofil=='medecin' || utilisateurBean.user().idprofil.libelleprofil=='secretaire'}">
+                    <p:menuitem value="Branchement manuel" url="/LSD/Pages/Secreta/BranchementManuelle.xhtml"/>
+                    <p:menuitem value="Liste des branchements" url="/LSD/Pages/Secreta/BranchementListPage.xhtml"/>
+                    <p:menuitem value="Imprimer les branchements" url="/LSD/Pages/Secreta/BranchementImprimer.xhtml"/>
+                    <p:menuitem value="Valider un branchement" url="/LSD/Pages/Secreta/BranchementValide.xhtml"/>
+                    <p:menuitem value="Historique des branchement" url="/LSD/Pages/Secreta/BranchementHisto.xhtml"/>
+                </c:if>
+
+
+
+            </p:submenu>
+        </c:if>
+        <c:if test="#{utilisateurBean.user().idprofil.libelleprofil=='administrateur'}">
+            <p:submenu label="Administration" >
+                <p:submenu label="Utilisateurs">
+                    <p:menuitem value=" utilisateur" url="/LSD/Pages/createuser.xhtml" />
+                    <p:menuitem value="Affectation des profils" url="#"/> 
+                    <p:menuitem value="profil" url="/LSD/Pages/createprofil.xhtml"/> 
+                </p:submenu>
+            </p:submenu>
+        </c:if>
+    </p:panelMenu>
+</ui:composition>

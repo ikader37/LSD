@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+
+    </h:head>
+    <h:body>
+        <ui:composition template="../../templates/template.xhtml">
+            <ui:define name="title">Patient</ui:define>
+            <ui:define name="content">
+                <p:panel id="horizontalList" header="Liste des patients sortis" toggleable="true" toggleOrientation="horizontal">
+                    <h:form id="form_list">
+                        <p:growl id="msgssup" showDetail="true"/>
+                        <p:dataTable id="listP" widgetVar="listP" rowIndexVar="index" rowKey="#{patient.idpatient}" emptyMessage="Aucun patient enregistré." value="#{patientController.patientSortie}" var="patient" selectionMode="single" selection="#{patientController.selectedPatient}" 
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                      rowsPerPageTemplate="5,10,15"
+                                      rows="10"
+                                      paginator="true"
+                                      >
+                            
+                            <p:column headerText="#">
+                                <h:outputLabel value="#{index+1}"/>
+                            </p:column>
+                            <p:column headerText="Nom et prenom(s)" filterBy="#{patient.nompatient}">
+                                <h:outputLabel value="#{patient.nompatient} #{patient.prenompatient}"/>
+                            </p:column>
+                            <p:column headerText="Sexe">
+                                <f:facet name="filter">
+                                    <p:selectOneButton onchange="PF('listP').filter()" styleClass="custom-filter">
+
+                                        <f:selectItem itemLabel="All" itemValue="" />
+                                        <f:selectItem itemLabel="M" itemValue="M" />
+                                        <f:selectItem itemLabel="F" itemValue="F" />
+                                    </p:selectOneButton>
+                                </f:facet>
+                                <h:outputLabel value="#{patient.sexe}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Date de sortie">
+                                <h:outputLabel value="#{patient.datesortie}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputLabel>
+                            </p:column>
+                            
+                            
+                            <p:column headerText="Causes de sortie">
+                                <h:outputLabel value="#{patient.cause_sortie}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

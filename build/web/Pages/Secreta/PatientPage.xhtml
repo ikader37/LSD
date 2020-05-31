@@ -1,0 +1,446 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+
+    </h:head>
+    <h:body>
+        <ui:composition template="../../templates/template.xhtml">
+            <ui:define name="title">Patient</ui:define>
+            <ui:define name="content">
+
+
+                <p:panel id="horizontal" header="Enregistrer un nouveau patient" toggleable="true" toggleOrientation="horizontal">
+
+                    <h:form id="form_en">
+                        <p:growl id="msgen" showDetail="true"/>
+                        <div class="row">
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Nom:"></p:outputLabel>
+
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-md-3">
+                                <p:inputText value="#{patientController.patient.nompatient}"/>
+                            </div>
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Prenom(s)"></p:outputLabel>
+
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-md-3">
+                                <p:inputText value="#{patientController.patient.prenompatient}"/>
+                            </div>
+
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Adresse"></p:outputLabel>
+
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-md-3">
+                                <p:inputText value="#{patientController.patient.adresse}"/>
+                            </div>
+
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Telephone 1"></p:outputLabel>
+
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-md-3">
+                                <p:inputMask value="${patientController.patient.telephone1}"  mask="99-99-99-99"/>
+                            </div>
+
+                        </div>
+                        <br/>
+                        <div class="row">
+
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Telephone 2"></p:outputLabel>
+                            </div>
+
+                            <div class="col-lg-3 col-xs-3 col-md-3">
+                                <p:inputMask value="#{patientController.patient.telephone2}" mask="99-99-99-99"/>
+                            </div>
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Nombre de seances"></p:outputLabel>
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-md-3">
+                                <p:inputNumber minValue="1" value="#{patientController.patient.nbreseance}"/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Etat de sante :"></p:outputLabel>
+                            </div>
+                            <div class="col-lg-3 col-xs-3 col-md-3">
+                                <p:selectOneMenu id="lazy" value="#{patientController.patient.etatsante}" dynamic="true" style="width:125px">
+                                    <f:selectItem itemLabel="Non chronique" itemValue="Non chronique" />
+                                    <f:selectItem itemLabel="Chronique" itemValue="Chronique"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Fonction :"></p:outputLabel>
+                            </div>
+
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:selectOneMenu value="#{patientController.patient.idfonction.idfonction}">
+                                    <f:selectItems value="#{FonctionCoontroller.fonctionList}" var="fonction" itemLabel="#{fonction.libellefonction}" itemValue="${fonction.idfonction}" >
+
+                                    </f:selectItems>
+                                </p:selectOneMenu>
+                            </div>
+
+                        </div>
+
+                        <br/>
+
+
+                        <div class="row">
+
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Contraintes de fonction :"></p:outputLabel>
+                            </div>
+
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:inputText value="#{patientController.patient.contraintefonction}"/>
+                            </div>
+
+
+
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Groupe :"></p:outputLabel>
+                            </div>
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:selectOneMenu value="#{patientController.patient.idgroupe.idgroupe}" >
+                                    <p:ajax listener="#{patientController.cheangeGroupe()}" update="idse"/>
+                                    <f:selectItems value="#{GroupeController.groupeList}" var="groupe" itemLabel="#{groupe.libellegroupe}" itemValue="#{groupe.idgroupe}">
+
+                                    </f:selectItems>
+                                </p:selectOneMenu>
+                            </div>
+
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Seances"></p:outputLabel>
+                            </div>
+
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3 col-xl-3">
+                                <p:selectManyMenu value="#{patientController.idSelectedSeanceId}" id="idse" showCheckbox="true">
+                                    <f:selectItem itemLabel="Choisir des seances" itemValue="#{null}"/>
+                                    <f:selectItems value="#{patientController.listSeanceSelect}" var="idsean" itemLabel="#{idsean.libelleseance}" itemValue="#{idsean.idseance}"/>
+                                </p:selectManyMenu>
+                            </div>
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Localite"></p:outputLabel>
+                            </div>
+
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:selectOneMenu value="#{patientController.patient.idlocalite.idlocalite}">
+                                    <f:selectItems value="#{localiteController.localiteList}" var="loc" itemLabel="#{loc.libellelocalite}" itemValue="#{loc.idlocalite}">
+
+                                    </f:selectItems>
+                                </p:selectOneMenu>
+                            </div>
+
+
+                        </div>
+
+                        <br/>
+                        <div class="row">
+
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Antecedants"></p:outputLabel>
+                            </div>
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:inputText value="#{patientController.patient.antecedent}"/>
+                            </div>
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Date d'entree"></p:outputLabel>
+                            </div>
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:datePicker id="popups" value="#{patientController.patient.dateentree}" pattern="dd/MM/yyyy"/>
+                            </div>
+
+                        </div> 
+                        <br/>
+                        <div class="row">
+
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Accompagnant"></p:outputLabel>
+                            </div>
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:inputText value="#{patientController.patient.accompagnant}"/>
+                            </div>
+
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Telephone accompagnant"></p:outputLabel>
+                            </div>
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:inputMask  mask="99-99-99-99" value="#{patientController.patient.telephonaccompagnant}"/>
+                            </div>
+
+
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:outputLabel value="Sexe"></p:outputLabel>
+                            </div>
+                            <div class="col-lg-3 col-xm-3 col-xs-3 col-md-3">
+                                <p:selectOneMenu  value="#{patientController.patient.sexe}">
+                                    <f:selectItem itemLabel="M" itemValue="M"/>
+                                    <f:selectItem itemValue="F" itemLabel="F"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>   
+
+
+
+
+
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-4 col-xs-4 col-md-4">
+                                <p:commandButton value="Enregistrer" type="submit" action="#{patientController.enregistrerPation()}" update=":form_en,:form_en:msgen,:form_list" icon="ui-icon-check" />
+                            </div>
+                            <div class="col-lg-4 col-xs-4 col-md-4">
+                                <p:commandButton value="Annuler" type="reset" icon="ui-icon-arrowrefresh-1-n"/>
+                            </div>
+                        </div>
+
+
+                    </h:form>
+                </p:panel>
+
+
+
+                <p:panel id="horizontalList" header="Liste des patients" toggleable="true" toggleOrientation="horizontal">
+                    <h:form id="form_list">
+                        <p:growl id="msgssup" showDetail="true"/>
+                        <p:dataTable id="listP" widgetVar="listP" rowIndexVar="index" rowKey="#{patient.idpatient}" emptyMessage="Aucun patient enregistré." value="#{patientController.patientList}" var="patient" selectionMode="single" selection="#{patientController.selectedPatient}" 
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                      rowsPerPageTemplate="5,10,15"
+                                      rows="10"
+                                      paginator="true"
+                                      >
+                            <f:facet name="footer">
+                                <p:commandButton value="Imprimer les patients par groupe" icon="ui-icon-print" ajax="false" actionListener="#{patientController.printPdfPatientsParGroupe()}"/>
+                                <p:commandButton value="Imprimer la liste des patients" icon="ui-icon-print" ajax="false" actionListener="#{patientController.printPdfPatients()}"/>
+                               <!-- <p:commandButton value="Changer les séances" oncomplete="PF('id_dial_mod').show()" update="id_dial_mod"/> -->
+                                <p:commandButton value="Sortir" icon="ui-icon-out" oncomplete="PF('dial_sortir').show()"  update="id_dial_sortir"/>
+                            
+                            </f:facet>
+                            <p:column headerText="#">
+                                <h:outputLabel value="#{index+1}"/>
+                            </p:column>
+                            <p:column headerText="Nom et prenom(s)" filterBy="#{patient.nompatient}">
+                                <h:outputLabel value="#{patient.nompatient} #{patient.prenompatient}"/>
+                            </p:column>
+                            <p:column headerText="Sexe">
+                                <f:facet name="filter">
+                                    <p:selectOneButton onchange="PF('listP').filter()" styleClass="custom-filter">
+
+                                        <f:selectItem itemLabel="All" itemValue="" />
+                                        <f:selectItem itemLabel="M" itemValue="M" />
+                                        <f:selectItem itemLabel="F" itemValue="F" />
+                                    </p:selectOneButton>
+                                </f:facet>
+                                <h:outputLabel value="#{patient.sexe}"/>
+                            </p:column>
+                            <p:column headerText="Etat">
+                                <h:outputLabel value="#{patient.etatsante}"/>
+                            </p:column>
+                            <p:column headerText="Telephones">
+                                <h:outputLabel value="#{patient.telephone1} / #{patient.telephone2}"/>
+                            </p:column>
+                            <p:column headerText="Groupe">
+                                <h:outputLabel value="#{patient.idgroupe.libellegroupe}"/>
+                            </p:column>
+                            <p:column headerText="Nombre de seance">
+                                <h:outputLabel value="#{patient.nbreseance}"/>
+                            </p:column>
+
+                            <p:column headerText="Accompagnant">
+                                <h:outputLabel value="#{patient.accompagnant } / #{patient.telephonaccompagnant}"/>
+                            </p:column>
+
+                            <p:column>
+                                <p:commandButton icon="ui-icon-pencil" update=":form_en" >
+                                    <f:setPropertyActionListener value="#{patient}" target="#{patientController.patient}"  />
+                                </p:commandButton>
+
+                            </p:column>
+
+                            <p:column>
+                                <p:commandButton icon="ui-icon-trash" action="#{patientController.supprimerPatient()}" update=":form_list:msgssup,:form_list:listP">
+                                    <f:setPropertyActionListener value="#{patient}" target="#{patientController.selectedPatient}" />
+                                    <p:confirm header="Confirmation" message="Voulez vous supprimer ?" icon="ui-icon-exclamation-triangle" />
+                                </p:commandButton>
+
+
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Yes"  type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ii-icon-times" />
+                                </p:confirmDialog> 
+                            </p:column>
+
+                            <p:column>
+                                <p:commandButton icon="ui-icon-search" update="detail_per" oncomplete="PF('detail_per').show()">
+                                    <f:setPropertyActionListener value="#{patient}" target="#{patientController.selectedPatient}" />
+                                </p:commandButton>
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:form>
+                </p:panel>
+
+                <p:dialog id="detail_per" widgetVar="detail_per" height="50%" width="50%" appendTo="@(body)" closeOnEscape="true" modal="true" header="Details">
+
+                    <p:panel header="Groupes : #{patientController.selectedPatient.idgroupe.libellegroupe}">
+                        <p:dataTable value="#{patientController.selectedPatient.seanceList}" var="seancDe" rowIndexVar="o" >
+                            <p:column headerText="#">
+                                <p:outputLabel value="#{o+1}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Jour">
+                                <p:outputLabel value="#{seancDe.idjour.libellejour}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Heure de debut">
+                                <p:outputLabel value="#{seancDe.heuredebut}"/>
+                            </p:column>
+                            <p:column headerText="Heure de fin">
+                                <p:outputLabel value="#{seancDe.heurefin}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+
+                    <p:panel header="BRANCHEMENTS">
+
+                        <p:dataTable value="#{patientController.selectedPatient.branchementCollection}" var="branchement">
+                            <p:column headerText="Date">
+                                <p:outputLabel value="#{branchement.datebranch}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:outputLabel>
+                            </p:column>
+                            <p:column headerText="Periode">
+                                <p:outputLabel value="#{branchement.heuredebut} -- #{branchement.heurefin}" />
+                            </p:column>
+                            <p:column headerText="Poste">
+                                <p:outputLabel value="#{branchement.idposte.libelleposte}"/>
+
+                            </p:column>
+                            <p:column headerText="Seance">
+                                <p:outputLabel value="#{branchement.idseance.libelleseance}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+
+                </p:dialog>
+                
+                
+                <p:dialog id="id_dial_mod" widgetVar="id_dial_mod" width="50%" height="50%" appendTo="@(body)" modal="true" >
+                    <f:view>
+                        <h:form>
+                            <h1><h:outputText value="Create/Edit"/></h1>
+                            <!--
+                            <p:panelGrid columns="2">
+                                
+                                <p:outputLabel value="Nom:"/>
+                                <p:inputText id="nompatient" value="#{patientController.selectedPatient.nompatient}" title="Nom" />
+                                <p:outputLabel value="Prenom(s):" />
+                                <p:inputText id="prenompatient" value="#{patientController.selectedPatient.prenompatient}" title="Prenom(s)" />
+                                <p:outputLabel value="Adresse:"/>
+                                <p:inputText id="adresse" value="#{patientController.selectedPatient.adresse}" title="Adresse" />
+                                <p:outputLabel value="Telephone 1:" />
+                                <p:inputText id="telephone1" value="#{patientController.selectedPatient.telephone1}" title="Telephone1" />
+                                <p:outputLabel value="Telephone 2:"/>
+                                <p:inputText id="telephone2" value="#{patientController.selectedPatient.telephone2}" title="Telephone2" />
+                                <p:outputLabel value="Accompagnant:"/>
+                                <p:inputText id="accompagnant" value="#{patientController.selectedPatient.accompagnant}" title="Accompagnant" />
+                                <p:outputLabel value="Telephone accompagnant:"/>
+                                <p:inputText id="telephonaccompagnant" value="#{patientController.selectedPatient.telephonaccompagnant}" title="Telephone accompagnant" />
+                                <p:outputLabel value="Antecedants:"/>
+                                <p:inputText id="antecedent" value="#{patientController.selectedPatient.antecedent}" title="Antecedants " />
+                                <p:outputLabel value="Date d'entrée:"/>
+                                <p:inputText id="dateentree" value="#{patientController.selectedPatient.dateentree}" title="Date entrée" >
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </p:inputText>
+                                <p:outputLabel value="Nombre de seance:" />
+                                <p:inputText id="nbreseance" value="#{patientController.selectedPatient.nbreseance}" title="Nombre de séance" />
+                                <p:outputLabel value="Etat de sante:"  />
+                                <p:selectOneMenu value="#{patientController.selectedPatient.etatsante}">
+                                     <f:selectItem itemLabel="Non chronique" itemValue="Non chronique" />
+                                    <f:selectItem itemLabel="Chronique" itemValue="Chronique"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Contraintes de fonction:"/>
+                                <p:inputText id="contraintefonction" value="#{patientController.selectedPatient.contraintefonction}" title="Contraintes de fonction" />
+                                <p:outputLabel value="Idfonction:"/>
+                                <p:selectOneMenu id="idfonction" value="#{patientController.selectedPatient.idfonction}" >
+                                  <f:selectItems value="#{FonctionCoontroller.fonctionList}" var="fonctionm" itemLabel="#{fonctionm.libellefonction}" itemValue="${fonctionm.idfonction}" >
+
+                                    </f:selectItems>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Localité:"/>
+                                <p:selectOneMenu id="idlocalite" value="#{patientController.selectedPatient.idlocalite}" >
+                                    <f:selectItems value="#{localiteController.localiteList}" var="locm" itemLabel="#{locm.libellelocalite}" itemValue="#{locm.idlocalite}">
+
+                                    </f:selectItems>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Sexe:"/>
+                                <p:selectOneMenu value="#{patientController.selectedPatient.sexe}">
+                                     <f:selectItem itemLabel="M" itemValue="M" />
+                                    <f:selectItem itemLabel="F" itemValue="F"/>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Groupe:"/>
+                                <p:selectOneMenu id="idgroupe" value="#{patientController.selectedPatient.idgroupe}" >
+                                   <p:ajax listener="#{patientController.cheangeGroupe()}" update="idsem"/>
+                                    <f:selectItems value="#{GroupeController.groupeList}" var="groupem" itemLabel="#{groupem.libellegroupe}" itemValue="#{groupem.idgroupe}">
+
+                                    </f:selectItems>
+                                </p:selectOneMenu>
+                                <p:outputLabel value="Seances:"/>
+                                <p:selectManyMenu id="idsem" showCheckbox="true" value="#{patientController.idSelectedSeanceId}">
+                                    <f:selectItems value="#{patientController.listSeanceSelect}" var="se" itemLabel="#{se.libelleseance}" itemValue="#{se.idseance}"/>
+                                </p:selectManyMenu>
+                            </p:panelGrid>
+                            -->
+                        </h:form>
+                    </f:view>
+
+                </p:dialog>
+               
+                
+                <p:dialog id="id_dial_sortir" widgetVar="dial_sortir" width="45%" height="50%" header="Sortie d'un patient" appendTo="@(body)" modal="true" showEffect="true" showHeader="true">
+                    <h:form>
+                        <p:panel>
+                        <p:panelGrid columns="2">
+                            <p:outputLabel value="Nom et prenom(s):"/>
+                            <p:outputLabel value="#{patientController.selectedPatient.nompatient}  #{patientController.selectedPatient.prenompatient}"/>
+                            <p:outputLabel value="Date de sortie:"/>
+                            <p:datePicker value="#{patientController.selectedPatient.datesortie}" pattern="dd/MM/yyyy" />
+                            <p:outputLabel value="Causes de sortie:"/>
+                            <p:inputTextarea value="#{patientController.selectedPatient.cause_sortie}" ></p:inputTextarea>
+                            
+                        </p:panelGrid>
+                            <f:facet name="footer"> 
+                                <p:commandButton value="Enregistrer" action="#{patientController.sortirPatient()}" update="form_list" oncomplete="PF('dial_sortir').hide()"/>
+                            </f:facet>
+                    </p:panel>
+                    </h:form>
+                </p:dialog>
+                
+                
+                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

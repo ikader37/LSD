@@ -1,0 +1,163 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <!--<title>admin home page</title>-->
+
+    </h:head>
+    <h:body>
+        <ui:composition template="../../templates/template.xhtml">
+            <ui:define name="title">Groupes</ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <p:commandButton oncomplete="PF('groupenewDialog').show()" value="Ajouter" icon="ui-icon-plus">
+                       
+                    </p:commandButton>
+                </h:form>
+                <p:dialog appendTo="@(body)" height="500px" width="600px" header="Nouvelle unite de  dialyse" widgetVar="groupenewDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <h:form id="formEn">
+                        <p:growl id="messageEn" life="2000"/>
+                        <div class="row">
+                            <div class="col-lg-4 col-xm-4 clo-xs-4">
+                                Libelle :
+                            </div>
+                            <div class="col-lg-8 col-xs-8 col-md-8">
+                                <p:inputText placeholder="Libelle" value="#{UniteDialyseController.unitedialyse.libelleunite}"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-4 col-xm-4 clo-xs-4">
+                                Nombre de postes
+                            </div>
+                            <div class="col-lg-8 col-xs-8 col-md-8">
+                                <p:inputNumber minValue="1" placeholder="Nombre de postes" value="#{UniteDialyseController.unitedialyse.nombreposte}"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-4 col-xm-4 clo-xs-4">
+                                Categorie:
+                            </div>
+                            <div class="col-lg-8 col-xs-8 col-md-8">
+                                <p:selectOneMenu value="#{UniteDialyseController.unitedialyse.categorie}">
+                                    <f:selectItems value="#{UniteDialyseController.categorieListe}" var="cat" itemLabel="#{cat}" itemValue="#{cat}"/>
+                                    
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-4 col-xm-4 clo-xs-4">
+                                <p:commandButton type="submit" action="#{UniteDialyseController.enregistrerUnite()}" update="messageEn,:form_list,formEn" styleClass="ui-priority-primary" oncomplete="PF('groupenewDialog').hide()" value="Enregistrer"></p:commandButton>
+                            </div>
+                            <div class="col-lg-8 col-xs-8 col-md-8">
+                                <p:commandButton type="reset" value="Annuler"></p:commandButton>
+                            </div>
+                        </div>
+                    </h:form>
+                </p:dialog>
+                
+                
+                
+                <h:form id="form_list">
+                    
+                    
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <p:dataTable id="groupList" var="unite"  selection="#{UniteDialyseController.selectedUnite}" value="#{UniteDialyseController.unitedialyseList}" editable="true" resizableColumns="true" resizeMode="fit"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                      rowsPerPageTemplate="5,10,15"
+                                      rows="10"
+                                      paginator="true"
+                                 >
+                        <f:facet name="header">
+                            Liste des differentes unites de dialyses
+                        </f:facet>
+                        <p:ajax event="rowEdit" listener="#{UniteDialyseController.editUnite}" update=":form_list:msgs,:form_list:groupList" />
+                        <p:ajax event="rowEditCancel" listener="#{UniteDialyseController.cancelEdit}" update=":form_list:msgs,:form_list:groupList" />
+                        
+                        <p:column headerText="Libelle" filterBy="#{unite.libelleunite}">
+                            
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{unite.libelleunite}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{unite.libelleunite}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                            
+                        </p:column>
+                        <p:column headerText="Nombre de postes">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{unite.nombreposte}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputNumber minValue="1" value="#{unite.nombreposte}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                        <p:column headerText="Categorie">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{unite.categorie}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:selectOneMenu value="#{unite.categorie}">
+                                        <f:selectItem itemLabel="#{unite.categorie}" itemValue="#{unite.categorie}"/>
+                                        
+                                        
+                                        <f:selectItems transient="true" value="#{UniteDialyseController.categorieListe}" var="cat2" itemLabel="#{cat2}" itemValue="#{cat2}"/>
+                                    </p:selectOneMenu>
+                                    
+                                </f:facet>
+                            </p:cellEditor>
+                           
+                        </p:column>
+                       <p:column style="width:35px">
+                           <p:rowEditor editTitle="Edit" />
+                        </p:column>
+                        <p:column style="width:32px;text-align: center">
+                            <p:commandButton title="Supprimer" icon="ui-icon-trash" action="#{UniteDialyseController.supprimerEnregistrement()}"  update=":form_list:msgs,:form_list:groupList" >
+                                <f:setPropertyActionListener value="#{unite}" target="#{UniteDialyseController.selectedUnite}" />
+                            <p:confirm header="Confirmation" message="Voulez vous supprimer ?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                            
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Yes"  type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-closethick" />
+                        </p:confirmDialog> 
+                            
+                        </p:column>
+                        <p:column style="width:32px;text-align: center">
+                            <p:commandButton icon="ui-icon-search" title="Details" action="#{UniteDialyseController.setSelectedUnite(unite)}" update="dial_info" oncomplete="PF('detailUnite').show()">
+                                 <!--<f:setPropertyActionListener value="#{unite}" target="#{UniteDialyseController.selectedUnite}" />-->
+                            
+                                <p:dialog appendTo="@(body)" height="500px" id="dial_info" width="600px" widgetVar="detailUnite" header="detail sur #{UniteDialyseController.selectedUnite.libelleunite}">
+                            
+                                    <p:dataTable emptyMessage="Aucun postes trouves" value="#{UniteDialyseController.selectedUnite.posteList}" var="poste" >
+                                        <p:column headerText="Intitule du poste">
+                                            <h:outputLabel value="#{poste.libelleposte}"/>
+                                        </p:column>
+                                        <p:column headerText="Reference du constructeur">
+                                            <h:outputLabel value="#{poste.refconstructeur}"/>
+                                        </p:column>
+                                        <p:column headerText="Etat">
+                                            <h:outputLabel value="#{poste.etatposte}"/>
+
+                                        </p:column>
+                                        <f:facet name="footer" >Total :#{UniteDialyseController.selectedUnite.posteList.size()} postes</f:facet>
+                                    </p:dataTable>
+                                </p:dialog>
+                            </p:commandButton>
+                        </p:column>
+                        
+                        
+                    </p:dataTable>
+                    
+                    
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

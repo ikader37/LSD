@@ -1,0 +1,105 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <!--<title>admin home page</title>-->
+
+    </h:head>
+    <h:body>
+        <ui:composition template="../../templates/template.xhtml">
+            <ui:define name="title">Liste des branchements</ui:define>
+            <ui:define name="content">
+                <p:panel header="Listes des reports">
+                   
+                    <h:form id="form">
+                        <p:growl id="msg" showDetail="true" />
+                        <p:dataTable  value="#{BranchementController.branchementReporter}" selection="#{BranchementController.branchementReprogrammer}" var="br"
+                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                      rowsPerPageTemplate="5,10,15"
+                                      rows="10" 
+                                     
+                                      paginator="true"
+                                      >
+                            <p:column headerText="Date de programmation">
+                                <p:outputLabel value="#{br.datebranch}">
+                                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                </p:outputLabel>
+                            </p:column>
+                            <p:column headerText="Heure de debut">
+                                <p:outputLabel value="#{br.heuredebut}"/>
+                            </p:column>
+                            <p:column headerText="Heure de debut">
+                                <p:outputLabel value="#{br.heurefin}"/>
+                            </p:column>
+                            <p:column headerText="Nom et prénom(s)">
+                                <p:outputLabel value="#{br.idpatient.nompatient}  #{br.idpatient.prenompatient}"/>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Reprogrammer" action="#{BranchementController.setBranchementReprogrammer(br)}"  oncomplete="PF('pan_rep').show()"><!--update="form:pan_rep"-->
+                                    <f:setPropertyActionListener value="#{br}" target="#{BranchementController.branchementReprogrammer}" />
+                                </p:commandButton>
+                                
+                            </p:column>
+                            
+                            
+                         </p:dataTable>
+                        
+                    </h:form>
+                    <p:dialog modal="true" appendTo="@(body)" id="pan_rep" widgetVar="pan_rep" header="Reprogrammer" width="600px" height="600px">
+                        <h:form id="form_d">
+                             <p:panelGrid columns="2">
+                                        <p:outputLabel value="Date :"/>
+                                        <p:datePicker value="#{BranchementController.datefinbr}" pattern="dd-MM-yyyy" />
+                                        <p:outputLabel value="Heure de debut"/>
+                                        <p:datePicker value="#{BranchementController.hdeb}" timeOnly="true" pattern="HH:mm" />
+                                        <p:outputLabel value="Heure de fin"/>
+                                        <p:datePicker value="#{BranchementController.hfin}" timeOnly="true" pattern="HH:mm"/>
+                                    </p:panelGrid>
+                            <p:commandButton value="Valider" action="#{BranchementController.reprogrammerPatient()}" update="form,form_d" oncomplete="PF('pan_rep').hide()"/>
+                                
+                        </h:form>
+                    
+                    </p:dialog>
+                </p:panel>
+                <p:panel header="Branchements non reporter">
+                    
+                    <h:form id="form_i">
+                       <p:growl id="msg2" showDetail="true" />
+                       <p:dataTable  value="#{BranchementController.branchementNonReporter}" selection="#{BranchementController.branchementReprogrammer}" var="br2"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                      rowsPerPageTemplate="5,10,15"
+                                      rows="10"
+                                      paginator="true"
+                                     >
+                            <p:column headerText="Date de programmation">
+                                <p:outputLabel value="#{br2.datebranch}">
+                                    <f:convertDateTime pattern="dd-MM-yyyy" />
+                                </p:outputLabel>
+                            </p:column>
+                            <p:column headerText="Heure de debut">
+                                <p:outputLabel value="#{br2.heuredebut}"/>
+                            </p:column>
+                            <p:column headerText="Heure de debut">
+                                <p:outputLabel value="#{br2.heurefin}"/>
+                            </p:column>
+                            <p:column headerText="Nom et prénom(s)">
+                                <p:outputLabel value="#{br2.idpatient.nompatient}  #{br2.idpatient.prenompatient}"/>
+                            </p:column>
+                            <p:column>
+                                <p:commandButton value="Reporter" action="#{BranchementController.reporterProgrammer(br2)}" update="form_i,form"/>
+                                
+                            </p:column>
+                            
+                            
+                         </p:dataTable>
+                    </h:form>
+                    
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

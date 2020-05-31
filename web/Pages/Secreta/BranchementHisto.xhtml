@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+
+
+    </h:head>
+    <h:body>
+        <ui:composition template="../../templates/template.xhtml">
+            <ui:define name="title">Patient</ui:define>
+            <ui:define name="content">
+                <p:panel header="Historique des branchements">
+
+                    <h:form id="idform">
+
+                        <p:dataTable  value="#{BranchementController.historiqueBranchement}"  var="patient" rowIndexVar="index" rowKey="#{patient.idpatient}" selection="#{patientController.selectedPatient}" selectionMode="single" filterBy="#{patient.nompatient}"
+                                      
+                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                      rowsPerPageTemplate="5,10,15"
+                                      rows="10"
+                                      paginator="true"
+                                      >
+                            <p:column  headerText="#">
+                                <p:outputLabel value="#{index+1}"/>
+                            </p:column>
+                            
+                            <p:column headerText="Nom et prenom(s)" filterBy="#{patient.nompatient} #{patient.prenompatient}">
+                                <p:outputLabel value="#{patient.nompatient} #{patient.prenompatient}"/>
+                            </p:column>
+                            <p:column headerText="Telephone">
+                                <p:outputLabel value="#{patient.telephone1}  #{patient.telephone2}"/>
+                            </p:column>
+
+                            <p:column headerText="Sexe"  filterBy="#{patient.sexe}">
+                                <p:outputLabel value="#{patient.sexe}"/>
+                            </p:column>
+                            <p:column headerText="Date d'entrée">
+                                <p:outputLabel  value="#{patient.dateentree}">
+                                    <f:convertDateTime  pattern="dd/MM/yyyy"/>
+                                </p:outputLabel>
+                            </p:column>
+                            <f:facet name="footer">
+                                <p:commandButton value="Details" oncomplete="PF('dial_det').show()" update="dial_det" />
+                            </f:facet>
+                        </p:dataTable>
+                    </h:form>
+                    
+                    <p:dialog header="Details des branchement" widgetVar="dial_det" id="dial_det"  width="50%" height="50%" appendTo="@(body)" modal="true" showEffect="bounce" hideEffect="fade">
+                        <p:panel>
+                            <p:dataTable value="#{patientController.selectedPatient.branchementCollection}" var="branchement" rowIndexVar="index2"  >
+                                <p:column   headerText="#">
+                                    <p:outputLabel  value="#{index2+1}"/>
+                                </p:column>
+                                <p:column  headerText="Date de branchement">
+                                    <p:outputLabel value="#{branchement.datebranch}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Horaires" >
+                                    <p:outputLabel value="#{branchement.heuredebut} - #{branchement.heurefin}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </p:dialog>
+                </p:panel>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

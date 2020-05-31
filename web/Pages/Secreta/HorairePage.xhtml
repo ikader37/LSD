@@ -1,0 +1,110 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <!--<title>admin home page</title>-->
+
+    </h:head>
+    <h:body>
+        <ui:composition template="../../templates/template.xhtml">
+            <ui:define name="title">Jours et horaires</ui:define>
+            <ui:define name="content">
+                <h:form>
+                    <p:commandButton oncomplete="PF('groupenewDialog').show()" value="Ajouter Jour">
+                       
+                    </p:commandButton>
+                </h:form>
+                <p:dialog appendTo="@(body)" height="500px" width="600px" header="Nouvelle localite" widgetVar="groupenewDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                    <h:form id="formEn">
+                        <p:growl id="messageEn" life="2000"/>
+                        <div class="row">
+                            <div class="col-lg-4 col-xm-4 clo-xs-4">
+                                Nom de la localite:
+                            </div>
+                            <div class="col-lg-8 col-xs-8 col-md-8">
+                                <p:inputText placeholder="Nom de la localite" value="#{localiteController.localite.libellelocalite}"></p:inputText>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4 col-xm-4 clo-xs-4">
+                                Region
+                            </div>
+                            <div class="col-lg-8 col-xs-8 col-md-8">
+                                <p:inputText  placeholder="Region" value="#{localiteController.localite.region}"></p:inputText>>
+                            </div>
+                        </div>
+                       
+                        <div class="row">
+                            <div class="col-lg-4 col-xm-4 clo-xs-4">
+                                <p:commandButton type="submit" action="#{localiteController.enregistrerLocalite()}" update="messageEn,:form_list,formEn" styleClass="ui-priority-primary" oncomplete="PF('groupenewDialog').hide()" value="Enregistrer"></p:commandButton>
+                            </div>
+                            <div class="col-lg-8 col-xs-8 col-md-8">
+                                <p:commandButton type="reset" value="Annuler"></p:commandButton>
+                            </div>
+                        </div>
+                    </h:form>
+                </p:dialog>
+                
+                
+                
+                <h:form id="form_list">
+                    
+                    
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <p:dataTable id="groupList" var="localite" selection="#{localiteController.selectedLocalite}" value="#{localiteController.localiteList}" editable="true">
+                        <f:facet name="header">
+                            Liste des ddifferents groupes
+                        </f:facet>
+                        <p:ajax event="rowEdit" listener="#{localiteController.editLocalite}" update=":form_list:msgs,:form_list:groupList" />
+                        <p:ajax event="rowEditCancel" listener="#{localiteController.cancelEdit}" update=":form_list:msgs,:form_list:groupList" />
+                        
+                        <p:column headerText="Nom de la localite">
+                            
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{localite.libellelocalite}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{localite.libellelocalite}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                            
+                        </p:column>
+                        <p:column headerText="Region">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{localite.region}" /></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText  value="#{localite.region}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column>
+                       
+                       <p:column style="width:35px">
+                            <p:rowEditor />
+                        </p:column>
+                        <p:column>
+                            <p:commandButton title="Supprimer" value="Supprimer" action="#{localiteController.supprimerLocalite()}"  update=":form_list:msgs,:form_list:groupList" >
+                                <f:setPropertyActionListener value="#{localite}" target="#{localiteController.selectedLocalite}" />
+                            <p:confirm header="Confirmation" message="Voulez vous supprimer ?" icon="pi pi-exclamation-triangle" />
+                        </p:commandButton>
+                            
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Yes"  type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                            <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                        </p:confirmDialog> 
+                            
+                        </p:column>
+                        <p:column style="width:32px;text-align: center">
+                             <p:commandButton icon="ui ui-search" title="View">
+                                 <f:setPropertyActionListener value="#{localite}" target="#{localiteController.selectedLocalite}" />
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

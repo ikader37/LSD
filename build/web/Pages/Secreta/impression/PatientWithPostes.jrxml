@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="00d53076-d2bc-42c3-93da-9af7d6b88041">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[select po.libelleposte,p.nompatient,p.prenompatient,p.telephone1,p.accompagnant,p.telephonaccompagnant,b.datebranch from branchement b,patient p,poste po where po.idposte=b.idposte and b.idpatient=p.idpatient]]>
+	</queryString>
+	<field name="libelleposte" class="java.lang.String"/>
+	<field name="nompatient" class="java.lang.String"/>
+	<field name="prenompatient" class="java.lang.String"/>
+	<field name="telephone1" class="java.lang.String"/>
+	<field name="accompagnant" class="java.lang.String"/>
+	<field name="telephonaccompagnant" class="java.lang.String"/>
+	<field name="datebranch" class="java.sql.Date"/>
+	<group name="groupe">
+		<groupExpression><![CDATA[$F{libelleposte}]]></groupExpression>
+		<groupHeader>
+			<band height="88">
+				<staticText>
+					<reportElement x="427" y="56" width="193" height="20" uuid="0500f58f-cc07-4a5d-b0ec-fb1834a70b4f"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Accompagnant]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="638" y="56" width="100" height="20" uuid="9795e51d-07ec-468f-a10a-32a7e2c9a934"/>
+					<textElement>
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Poste]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="284" y="56" width="136" height="20" uuid="62c9c5d9-0603-4474-a4fe-b2aaaffd7273"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Adresse]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="145" y="56" width="123" height="20" uuid="627a39a1-216f-4198-9201-64970d79e444"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Prénom(s)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="56" width="131" height="20" uuid="c89fcb77-f680-4912-a98b-7ae924a97d92"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Nom]]></text>
+				</staticText>
+				<line>
+					<reportElement x="144" y="45" width="1" height="37" uuid="d2b8f71c-0262-40fc-93bf-5a8c82020ba3"/>
+					<graphicElement>
+						<pen lineWidth="2.0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="0" y="45" width="752" height="2" uuid="150a4cc1-dd71-4fd0-b02c-a7da87ed1b72"/>
+					<graphicElement>
+						<pen lineWidth="2.0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="-1" y="82" width="756" height="2" uuid="0e187db6-4204-4c41-8e45-6f0b6066bd5b"/>
+					<graphicElement>
+						<pen lineWidth="2.0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="628" y="45" width="1" height="37" uuid="facafc79-fbd9-47af-9f16-ba7231ce0dc4"/>
+					<graphicElement>
+						<pen lineWidth="2.0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="427" y="47" width="1" height="37" uuid="d43794e2-b571-4f66-a686-38d029edec0b"/>
+					<graphicElement>
+						<pen lineWidth="2.0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="279" y="45" width="1" height="37" uuid="2167b176-f8f8-439e-8ce0-3b676122a604"/>
+					<graphicElement>
+						<pen lineWidth="2.0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="4" y="45" width="1" height="39" uuid="37e07550-e745-453a-bcf6-de3e6e5502d9"/>
+					<graphicElement>
+						<pen lineWidth="2.0"/>
+					</graphicElement>
+				</line>
+				<line>
+					<reportElement x="751" y="48" width="1" height="34" uuid="7166ff80-955b-484f-896b-80825e6ea446"/>
+					<graphicElement>
+						<pen lineWidth="2.0"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="181" splitType="Stretch">
+			<staticText>
+				<reportElement x="520" y="156" width="100" height="20" uuid="9f130132-0156-4978-ac64-26234ea0c553"/>
+				<text><![CDATA[OUAGADOUGOU, le]]></text>
+			</staticText>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="627" y="156" width="100" height="20" uuid="512d4bd5-afed-4cdd-bfd7-19ea04b1fffe"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="573" y="20" width="148" height="20" uuid="034fe67f-5153-4820-8c6a-1c27996a7033"/>
+				<text><![CDATA[Unité-Progrès-Justice]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="74" splitType="Stretch">
+			<textField>
+				<reportElement x="629" y="11" width="100" height="20" uuid="168638ac-a73b-4f68-b956-7d7cf48a61c7"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="41" width="484" height="20" uuid="26391b85-f234-4b70-b6c0-3aa62da889fc"/>
+				<textElement textAlignment="Center">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Liste des patients du ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="347" y="41" width="226" height="20" uuid="82376c68-cff9-4691-8feb-155a79606ed7"/>
+				<textElement>
+					<font size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{datebranch}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="53" splitType="Stretch">
+			<line>
+				<reportElement x="-1" y="7" width="752" height="1" uuid="4c1f23d8-03ce-4c6b-9101-23eeaa4c7724"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="20" y="16" width="100" height="32" uuid="68022dd6-538a-49ce-bf9d-1ef8db0165c4"/>
+				<textFieldExpression><![CDATA[$F{nompatient}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="284" y="15" width="134" height="31" uuid="009170ac-2c20-4069-8878-68f4989916bf"/>
+				<textFieldExpression><![CDATA[$F{telephone1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="436" y="13" width="189" height="31" uuid="b19c4bfc-8b13-4932-8cbe-6c80835f7a33"/>
+				<textFieldExpression><![CDATA[$F{accompagnant}+  "/" +$F{telephonaccompagnant}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="1" y="9" width="1" height="37" uuid="9a3ea429-af3c-4238-8733-338bc0c643c3"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="1" y="46" width="751" height="1" uuid="5985eff2-41b9-4ad9-9496-86ff503736ca"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="275" y="8" width="1" height="37" uuid="45ceab69-bfc3-4e60-ab35-de5ba0bc6d5c"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="637" y="13" width="114" height="31" uuid="cc26ab42-1048-4a02-8d24-baba5d957cd2"/>
+				<textFieldExpression><![CDATA[$F{libelleposte}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="154" y="13" width="112" height="33" uuid="0f5b777a-0e19-4b57-a4ea-f6a19984e491"/>
+				<textFieldExpression><![CDATA[$F{prenompatient}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="750" y="7" width="1" height="37" uuid="106ad9d4-a09f-4c18-95a1-2667ec8e60a2"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="426" y="9" width="1" height="37" uuid="3fd51437-b4ee-4c21-ad12-7d2b72524658"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="143" y="9" width="1" height="37" uuid="c0613b5c-002c-4657-8d80-5d1f1b979df2"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="627" y="9" width="1" height="39" uuid="5853a439-15b1-45b8-995d-d75c6a83c686"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<break type="Column">
+				<reportElement x="0" y="37" width="100" height="1" uuid="f65bdbf1-6688-447c-b888-615a80a372c3"/>
+			</break>
+		</band>
+	</summary>
+</jasperReport>

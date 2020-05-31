@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        
+    </h:head>
+    <h:body>
+       <ui:composition template="../../templates/template.xhtml">
+            <ui:define name="title">Branchement</ui:define>
+            <ui:define name="content">
+                <div class="row">
+                    <div class="col-lg-6 col-xs-6 col-md-6">
+                        <p:commandButton value="Branchement semi-automatique" oncomplete="PF('semi').show()"/>
+                    </div>
+                    
+                     <div class="col-lg-6 col-xs-6 col-md-6">
+                         <p:commandButton value="Branchement automatique" oncomplete="PF('auto').show()"/>
+                    </div>
+                </div>
+                <p:dialog id="semi" appendTo="@(body)" widgetVar="semi" modal="true" height="600px" width="600px" header="Banhcement semi-automatique">
+                    <h:form id="jj">
+                        <p:growl showDetail="true" id="msges"/>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                Groupe:
+                            </div>
+                            <div class="col-lg-8">
+                                <p:selectOneMenu value="#{BranchementController.groupe.idgroupe}" >
+                                   
+                                    
+                                    <f:selectItems value="#{GroupeController.groupeList}" var="groupe" itemValue="#{groupe.idgroupe}" itemLabel="#{groupe.libellegroupe}"/>
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                        <br/>
+                        
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                
+                                Date de debut du branchement:
+                            </div>
+                            <div class="col-lg-8">
+                                <p:datePicker value="#{BranchementController.branchement.datebranch}" pattern="dd-MM-yyyy" />
+                                
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                
+                                Date de fin du branchement:
+                            </div>
+                            <div class="col-lg-8">
+                                <p:datePicker value="#{BranchementController.datefinbr}" pattern="dd-MM-yyyy" />
+                                
+                            </div>
+                        </div>
+                        <!--
+                        <div class="row">
+                            <div class="col-lg-4">
+                                Horaires:
+                            </div>
+                            <div class="col-lg-8">
+                                <p:datePicker timeOnly="true" pattern="HH:mm" value="#{BranchementController.hdeb}" placeholder="Heure de debut"/> <p:datePicker value="#{BranchementController.hfin}" timeOnly="true" pattern="HH:mm" placeholder="Heure de fin"/>
+                                
+                            </div>
+                        </div>
+                        -->
+                        <br/>
+                     
+                        <br/>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <p:commandButton ajax="false" type="sunmit" value="Programmer" action="#{BranchementController.programmeSemiAuto()}" update="msges"/>
+                            </div>
+                            <!-- <div class="col-lg-6">
+                                 <p:commandButton value="Annuler"/>
+                            </div>
+                            -->
+                        </div>
+                        
+                    </h:form>
+                </p:dialog>
+                
+                
+                <p:dialog header="Branchement automatique" height="600px" modal="true" appendTo="@(body)" width="600px" widgetVar="auto" id="auto" >
+                    <h:form id ="m">
+                        <p:growl showDetail="true"/>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                
+                                Date de debut du branchement:
+                            </div>
+                            <div class="col-lg-8">
+                                <p:datePicker value="#{BranchementController.branchement.datebranch}" pattern="dd-MM-yyyy" />
+                                
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                
+                                Date de fin du branchement:
+                            </div>
+                            <div class="col-lg-8">
+                                <p:datePicker value="#{BranchementController.datefinbr}" pattern="dd-MM-yyyy" />
+                                
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row">
+                        <div>
+                            <p:commandButton value="Programmer" action="#{BranchementController.programmeAuto()}" update="m" oncomplete="PF('auto').hide()"/>
+                        </div>
+                    </div>
+                    </h:form>
+                    
+                    
+                    
+                </p:dialog>
+            </ui:define>
+       </ui:composition>
+        
+    </h:body>
+</html>
+
