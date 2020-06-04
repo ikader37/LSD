@@ -95,10 +95,6 @@
 				<reportElement x="10" y="51" width="224" height="20" uuid="845b9c53-c8e5-4f9b-bcc5-68caa254fbe6"/>
 				<text><![CDATA[=======================================]]></text>
 			</staticText>
-			<image>
-				<reportElement x="283" y="62" width="253" height="90" uuid="fb656a75-8d09-442d-9bce-14fc2981ddb8"/>
-				<imageExpression><![CDATA["/home/ilboudo/Documents/LSD/LSD/web/resources/images/chuyobanner.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>

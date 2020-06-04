@@ -531,6 +531,7 @@ public class BranchementController extends AbstractBean implements Serializable 
             Logger.getLogger(BranchementController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("EE2 :" + ex.getMessage());
         }
+        init();
     }
 
     /**
@@ -579,6 +580,7 @@ public class BranchementController extends AbstractBean implements Serializable 
             Logger.getLogger(BranchementController.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("EE2 :" + ex.getMessage());
         }
+        init();
 
     }
 
@@ -637,7 +639,7 @@ public class BranchementController extends AbstractBean implements Serializable 
         } catch (Exception e) {
             System.out.println("SDDSD :" + e.getLocalizedMessage());
         }
-
+        init();
     }
 
     public void detailBranchementClic() {

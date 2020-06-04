@@ -20,7 +20,7 @@
                                       paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                       rowsPerPageTemplate="5,10,15"
                                       rows="10" 
-                                     
+                                     id="tableau"
                                       paginator="true"
                                       >
                             <p:column headerText="Date de programmation">
@@ -64,7 +64,7 @@
                     
                     </p:dialog>
                 </p:panel>
-                <p:panel header="Branchements non reporter">
+                <p:panel header="Branchements non reporter" id="non_reporter">
                     
                     <h:form id="form_i">
                        <p:growl id="msg2" showDetail="true" />
@@ -73,6 +73,7 @@
                                       rowsPerPageTemplate="5,10,15"
                                       rows="10"
                                       paginator="true"
+                                      id="tableau_non_reporter"
                                      >
                             <p:column headerText="Date de programmation">
                                 <p:outputLabel value="#{br2.datebranch}">
