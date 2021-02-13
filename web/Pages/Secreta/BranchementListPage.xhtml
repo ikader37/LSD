@@ -16,7 +16,7 @@
                    
                     <h:form id="form">
                         <p:growl id="msg" showDetail="true" />
-                        <p:dataTable  value="#{BranchementController.branchementReporter}" selection="#{BranchementController.branchementReprogrammer}" var="br"
+                        <p:dataTable  value="#{BranchementController_2.branchementReporter}" selection="#{BranchementController_2.branchementReprogrammer}" var="br"
                                       paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                       rowsPerPageTemplate="5,10,15"
                                       rows="10" 
@@ -38,8 +38,8 @@
                                 <p:outputLabel value="#{br.idpatient.nompatient}  #{br.idpatient.prenompatient}"/>
                             </p:column>
                             <p:column>
-                                <p:commandButton value="Reprogrammer" action="#{BranchementController.setBranchementReprogrammer(br)}"  oncomplete="PF('pan_rep').show()"><!--update="form:pan_rep"-->
-                                    <f:setPropertyActionListener value="#{br}" target="#{BranchementController.branchementReprogrammer}" />
+                                <p:commandButton value="Reprogrammer" action="#{BranchementController_2.setBranchementReprogrammer(br)}"  oncomplete="PF('pan_rep').show()"><!--update="form:pan_rep"-->
+                                    <f:setPropertyActionListener value="#{br}" target="#{BranchementController_2.branchementReprogrammer}" />
                                 </p:commandButton>
                                 
                             </p:column>
@@ -52,13 +52,13 @@
                         <h:form id="form_d">
                              <p:panelGrid columns="2">
                                         <p:outputLabel value="Date :"/>
-                                        <p:datePicker value="#{BranchementController.datefinbr}" pattern="dd-MM-yyyy" />
+                                        <p:datePicker value="#{BranchementController_2.datefinbr}" pattern="dd-MM-yyyy" />
                                         <p:outputLabel value="Heure de debut"/>
-                                        <p:datePicker value="#{BranchementController.hdeb}" timeOnly="true" pattern="HH:mm" />
+                                        <p:datePicker value="#{BranchementController_2.hdeb}" timeOnly="true" pattern="HH:mm" />
                                         <p:outputLabel value="Heure de fin"/>
-                                        <p:datePicker value="#{BranchementController.hfin}" timeOnly="true" pattern="HH:mm"/>
+                                        <p:datePicker value="#{BranchementController_2.hfin}" timeOnly="true" pattern="HH:mm"/>
                                     </p:panelGrid>
-                            <p:commandButton value="Valider" action="#{BranchementController.reprogrammerPatient()}" update="form,form_d" oncomplete="PF('pan_rep').hide()"/>
+                            <p:commandButton value="Valider" action="#{BranchementController_2.reprogrammerPatient()}" update="form,form_d" oncomplete="PF('pan_rep').hide()"/>
                                 
                         </h:form>
                     
@@ -68,7 +68,7 @@
                     
                     <h:form id="form_i">
                        <p:growl id="msg2" showDetail="true" />
-                       <p:dataTable  value="#{BranchementController.branchementNonReporter}" selection="#{BranchementController.branchementReprogrammer}" var="br2"
+                       <p:dataTable  value="#{BranchementController_2.branchementNonReporter}" selection="#{BranchementController_2.branchementReprogrammer}" var="br2"
                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                       rowsPerPageTemplate="5,10,15"
                                       rows="10"
@@ -90,7 +90,7 @@
                                 <p:outputLabel value="#{br2.idpatient.nompatient}  #{br2.idpatient.prenompatient}"/>
                             </p:column>
                             <p:column>
-                                <p:commandButton value="Reporter" action="#{BranchementController.reporterProgrammer(br2)}" update="form_i,form"/>
+                                <p:commandButton value="Reporter" action="#{BranchementController_2.reporterProgrammer(br2)}" update="form_i,form"/>
                                 
                             </p:column>
                             

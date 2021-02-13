@@ -549,25 +549,9 @@ public class BranchementController extends AbstractBean implements Serializable 
         String sql = "";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("DATE :" + sdf.format(new Date()));
-        //Verifions que ces la cases des postes qui a ete selectionnees et lunite nom
-//        if (impPoste == true && impDialise == false) {
-//            sql = "select b.datebranch, po.libelleposte,p.nompatient,p.prenompatient,p.telephone1,p.accompagnant,p.telephonaccompagnant from branchement b,patient p,poste po where po.idposte=b.idposte and b.idpatient=p.idpatient and b.datebranch= '" + sdf.format(new Date()) + "'";
-//            jasperPath = "/Pages/Secreta/impression/patientsAvecPoste.jrxml";
-//        }
-//        //Verifions si le poste et lunite ont ete selectionnees
-//        if (impPoste == true && impDialise == true) {
-//            sql = "select from branchement b,patient p,poste po,unitedialyse u where po.idposte=b.idposte and b.idpatient=p.idpatient and u.idunite=po.idunite and b.datebranch='" + sdf.format(new Date()) + "'";
-//            jasperPath = "/Pages/Secreta/impression/patientsAvecPosteUnite.jrxml";
-//        }
-//        //Unite de dialyse selectionne et pas le poste
-//        if (impPoste == false && impDialise == true) {
-//            sql = "select from branchement b,patient p,poste po,unitedialyse u where po.idposte=b.idposte and b.idpatient=p.idpatient and u.idunite=po.idunite and b.datebranch='" + sdf.format(new Date()) + "'";
-//            jasperPath = "/Pages/Secreta/impression/patientsAvecUnite.jrxml";
-//        }
-        //Aunuc na ete selectionnee
-       // if (impPoste == false && impDialise == false) {
+  
             sql = "select *,row_number() over() as numero from branchement b,patient p,seance s,unitedialyse u where b.idpatient=p.idpatient and s.idunite=u.idunite and s.idseance=b.idseance and b.fg_passe='P' and b.datebranch='" + sdf.format(new Date()) + "'";
-            jasperPath = "/Pages/Secreta/impression/patientsSPosSUni.jrxml";
+            jasperPath = "/Pages/Secreta/impression/patientDuJour.jrxml";
 
        // }
         try {
@@ -601,30 +585,11 @@ public class BranchementController extends AbstractBean implements Serializable 
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         System.out.println("DATE :" + sdf.format(new Date()));
-        //Verifions que ces la cases des postes qui a ete selectionnees et lunite nom
-//        if (impPoste == true && impDialise == false) {
-//            System.out.println("ESSAI");
-//            System.out.println("DEBUT:" + sdf.format(hdeb));
-//            System.out.println("FIN :" + sdf.format(hfin));
-//            sql = "select b.datebranch, po.libelleposte,p.nompatient,p.prenompatient,p.telephone1,p.accompagnant,p.telephonaccompagnant from branchement b,patient p,poste po where po.idposte=b.idposte and b.idpatient=p.idpatient and b.datebranch between '" + sdf.format(hdeb) + "' and '" + sdf.format(hfin) + "'";
-//            jasperPath = "/Pages/Secreta/impression/patientsAvecPoste.jrxml";
-//        }
-//        //Verifions si le poste et lunite ont ete selectionnees
-//        if (impPoste == true && impDialise == true) {
-//            sql = "select b.datebranch, po.libelleposte,p.nompatient,p.prenompatient,u.libelleunite,p.telephone1,p.accompagnant,p.telephonaccompagnant from branchement b,patient p,poste po,unitedialyse u where po.idposte=b.idposte and b.idpatient=p.idpatient and u.idunite=po.idunite and b.datebranch between '" + sdf.format(hdeb) + "' and '" + sdf.format(hfin) + "'";
-//            jasperPath = "/Pages/Secreta/impression/patientsAvecPosteUnite.jrxml";
-//        }
-//        //Unite de dialyse selectionne et pas le poste
-//        if (impPoste == false && impDialise == true) {
-//            sql = "select b.datebranch, po.libelleposte,p.nompatient,p.prenompatient,p.telephone1,p.accompagnant,p.telephonaccompagnant, u.libelleunite from branchement b,patient p,poste po,unitedialyse u where po.idposte=b.idposte and b.idpatient=p.idpatient and u.idunite=po.idunite and b.datebranch between '" + sdf.format(hdeb) + "' and '" + sdf.format(hfin) + "'";
-//            jasperPath = "/Pages/Secreta/impression/patientsAvecUnite.jrxml";
-//        }
-        //Aunuc na ete selectionnee
-        //if (impPoste == false && impDialise == false) {
+        
             parametre.put("datedeb", sdf.format(hdeb));
             parametre.put("datefin", sdf.format(hfin));
             sql = "select *,row_number() over() as numero from branchement b,patient p,seance s,unitedialyse u where b.idpatient=p.idpatient and s.idunite=u.idunite and s.idseance=b.idseance and b.fg_passe='P' and b.datebranch between '" + sdf.format(hdeb) + "' and '" + sdf.format(hfin) + "'";
-            jasperPath = "/Pages/Secreta/impression/patientsSPosSUni.jrxml";
+            jasperPath = "/Pages/Secreta/impression/patientsParPeriode.jrxml";
 
        // }
         try {
